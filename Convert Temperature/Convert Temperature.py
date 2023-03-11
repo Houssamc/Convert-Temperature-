@@ -1,0 +1,50 @@
+from tkinter import *
+from PIL import ImageTk, Image
+
+def convert_temperature(unit):
+    fahrenheit = float(fah_temp_entry.get())
+    if unit == 'C':
+        celsius = (fahrenheit - 32) * 5/9
+        output_label.configure(text='Converted to Celsius: {:.2f}'.format(celsius))
+    elif unit == 'F':
+        fahrenheit2 = (fahrenheit * 9/5) + 32
+        output_label.configure(text='Converted to Fahrenheit: {:.2f}'.format(fahrenheit2))
+
+# create window
+window = Tk()
+window.configure(bg='grey')
+window.geometry('660x600')
+window.title('Convert Temperature')
+
+# labels
+title_label = Label(window, text=' Convert Temperature :) ', bg='grey', anchor='center', justify='center', padx=0, pady=0, font=('comic sans', 20, 'bold'))
+title_label.grid(row=0, column=0, sticky='w', ipadx=25, ipady=10, padx=140)
+
+# picture label and grid
+img = Image.open('temp.png')
+img = img.resize((350, 200), Image.ANTIALIAS)
+photo = ImageTk.PhotoImage(img)
+img_label = Label(window, image=photo)
+img_label.grid(row=2, column=0, padx=150, pady=10, sticky='w')
+img_label.image = photo
+
+# label and entry for Fahrenheit
+fahrenheit_label = Label(window, text='Enter Temperature: ', bg='grey', font=('comic sans', 15, 'bold'))
+fahrenheit_label.grid(row=3, column=0, ipadx=10, ipady=10, sticky='w')
+
+fah_temp_entry = Entry(window, width=10, bg='white', font=('comic sans', 15, 'bold'))
+fah_temp_entry.grid(row=3, column=0, ipadx=10, ipady=10)
+
+# buttons
+convert_button = Button(text='Convert Fahrenheit to Celsius', command=lambda: convert_temperature('C'), bg='blue', font=('comic sans', 15, 'bold'))
+convert_button.grid(row=4, column=0, ipadx=10, ipady=10)
+
+convert_button2 = Button(text='Convert Celsius to Fahrenheit', command=lambda: convert_temperature('F'), bg='gold', font=('comic sans', 15, 'bold'))
+convert_button2.grid(row=5, column=0, ipadx=10, ipady=10)
+
+# output labels
+output_label = Label(window, bg='grey', font=('comic sans', 15, 'bold'))
+output_label.grid(row=6, column=0, columnspan=3, ipadx=10, ipady=10)
+
+# run main loop
+window.mainloop()
